@@ -8,10 +8,10 @@
 # @build-example docker build . -f alphp-dev.Dockerfile -t alphp:dev
 #
 
-FROM alphp:cli as builder
+FROM alphp/alphp:cli as builder
 
 
-FROM alphp:base
+FROM alphp/alphp:base
 LABEL maintainer="inhere <cloud798@126.com>" version="1.0"
 
 WORKDIR /usr/lib/php7/modules
