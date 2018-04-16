@@ -1,0 +1,33 @@
+version: '3'
+services:
+    phpng:
+        image: alphp:dev
+        container_name: phpdev
+        hostname: phpdev
+        environment:
+            - APP_ENV=dev
+        links:
+            - "mysql:mysql"
+            - "redis:redis"
+        ports:
+            - "10080:80"
+            - "19501:9501"
+        volumes:
+            - ./:/var/www
+            - ./tmp/ng-conf:/etc/nginx
+            - ./tmp/logs:/var/log
+
+    mysql:
+        image: mysql
+        container_name: mysql-dev
+        environment:
+            - MYSQL_ROOT_PASSWORD=123456
+        volumes:
+            - ./tmp/data/mysql:/var/lib/mysql
+
+    redis:
+        image: redis
+        container_name: reds-dev
+        ports:
+            - "6379:6379"
+
