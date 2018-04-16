@@ -8,7 +8,7 @@
 # @build-example docker build . -f alphp-cli.Dockerfile -t alphp:cli
 #
 
-FROM alphp:base
+FROM alphp/alphp:base
 LABEL maintainer="inhere <cloud798@126.com>" version="1.0"
 
 ##
