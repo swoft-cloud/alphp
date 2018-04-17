@@ -5,7 +5,7 @@
 # @link https://hub.docker.com/_/php/         php image
 # @link https://github.com/docker-library/php php dockerfiles
 # ------------------------------------------------------------------------------------
-# @build-example docker build . -f alphp-dev.Dockerfile -t alphp:dev
+# @build-example docker build . -f alphp-dev.Dockerfile -t alphp/alphp:dev
 #
 
 FROM alphp/alphp:cli as builder

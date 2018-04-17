@@ -1,11 +1,13 @@
 # alpine PHP env
 
-基于alpine的环境微型php环境。构建完成的镜像只有30-40M
+基于alpine的微型php docker环境，php 是 `7.1.x`, 包含最新版本swoole。构建完成的镜像只有30-40多M
 
 共有几个镜像
 
 - `alphp/alphp:base` 基础镜像，后几个镜像基于它。(含有php和一些通用的扩展)
 - `alphp/alphp:cli` php cli环境镜像，含有swoole 2 和 mongodb 扩展
+- `alphp/alphp:fpm` 在 `alphp/alphp:cli` 的基础上，含有 nginx php-fpm
+- `alphp/alphp:dev` 在 `alphp/alphp:cli` 的基础上，含有 nginx php-fpm 并额外包含一些常用工具：vim wget git zip telnet ab 等
 
 ## 直接拉取
 
@@ -13,38 +15,52 @@
 docker pull alphp/alphp:base
 ```
 
+```bash
+docker pull alphp/alphp:cli
+docker pull alphp/alphp:fpm
+docker pull alphp/alphp:dev
+```
+
 ## 本地构建
 
-- 构建基础镜像
+### 构建基础镜像
 
-```sh
-cd services/php
+```bash
 docker build . -f alphp-base.Dockerfile -t alphp/alphp:base
 ```
 
-- 添加额外扩展
+### 构建功能镜像
 
-ext: `swoole, mongodb`
+- 构建 `alphp/alphp:cli`
 
-```sh
+```bash
 docker build . -f alphp-cli.Dockerfile -t alphp/alphp:cli
+```
 
-// 在alphp:cli 的基础上，含有 nginx php-fpm
+- 构建 `alphp/alphp:fpm`
+
+```bash
+// 在alphp/alphp:cli 的基础上，含有 nginx php-fpm
 docker build . -f alphp-fpm.Dockerfile -t alphp/alphp:fpm
+```
 
-// 在alphp:cli 的基础上，含有 nginx php-fpm 额外包含一些常用工具： vim wget git zip telnet ab 等
+- 构建 `alphp/alphp:dev`
+
+```bash
+// 在 alphp/alphp:cli 的基础上，含有 nginx php-fpm 额外包含一些常用工具：vim wget git zip telnet ab 等
 docker build . -f alphp-dev.Dockerfile -t alphp/alphp:dev
 ```
 
 ## 一些有用的
 
-### 更改时区
+### 镜像中的一些信息
 
-```
-Asia/Shanghai
-RUN sed -i "s/;date.timezone =.*/date.timezone = America\/New_York/" /etc/php5/fpm/php.ini
-RUN sed -i "s/;date.timezone =.*/date.timezone = America\/New_York/" /etc/php5/cli/php.ini
-```
+- php execute file: `/usr/bin/php`
+- php ini file: `/etc/php7/php.ini`
+- 扩展配置目录：`/etc/php7/conf.d`
+- 扩展编译目录：`/usr/lib/php7/modules`
+- php-fpm execute file: `/usr/bin/php-fpm`
+- php-fpm conf: `/etc/php7/php-fpm.conf`
 
 ### 重新生成 composer autoload
 
@@ -69,13 +85,6 @@ msgpack  -- MessagePack 数据格式实现
 yaconf  -- 持久配置容器(php7+)
 ```
 
-### add composer tool
-
-```
-ADD tools/composer.phar /usr/local/bin/composer
-RUN chmod 755 /usr/local/bin/composer
-```
-
 ## 工具推荐
 
 ### 工具列表
@@ -86,6 +95,13 @@ RUN chmod 755 /usr/local/bin/composer
 - 类参考文档生成
 - [deployer](https://deployer.org/releases/v4.0.1/deployer.phar) 一个用PHP编写的部署工具支持流行的框架
 - [xhprof 安装](install-xhprof.md)
+
+### add composer
+
+```
+ADD tools/composer.phar /usr/local/bin/composer
+RUN chmod 755 /usr/local/bin/composer
+```
 
 ## 类参考文档生成
 
@@ -185,19 +201,6 @@ yum install httpd-tools
 - `--enable-http2`         // 增加对HTTP2的支持，依赖nghttp2库. 必须开启openssl
 - `--enable-coroutine`       // 启用协程能力
 
-
-## 一些信息
-
-继承自基础php镜像创建的容器中的php，与通过系统安装的php有些不太一样的地方。
-
-**继承基础php镜像的php**
-
-- php execute file: `/usr/local/bin/php`
-- php-fpm execute file: `/usr/local/sbin/php-fpm`
-- php-fpm conf: `/usr/local/etc/php-fpm.conf`
-- php源码目录：`/usr/src` -- 运行 `docker-php-source extract` 可解压出来
-- 扩展编译配置：`/usr/local/etc/php/conf.d/`
-- 扩展编译目录：`/usr/local/lib/php/extensions/no-debug-non-zts-20131226/`
 
 ## 库推荐
 

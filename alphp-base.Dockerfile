@@ -5,7 +5,7 @@
 # @link https://hub.docker.com/_/php/         php image
 # @link https://github.com/docker-library/php php dockerfiles
 # ------------------------------------------------------------------------------------
-# @build-example docker build . -f alphp-base.Dockerfile -t alphp:base
+# @build-example docker build . -f alphp-base.Dockerfile -t alphp/alphp:base
 #
 
 FROM alpine:3.7

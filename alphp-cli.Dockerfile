@@ -5,7 +5,7 @@
 # @link https://hub.docker.com/_/php/         php image
 # @link https://github.com/docker-library/php php dockerfiles
 # ------------------------------------------------------------------------------------
-# @build-example docker build . -f alphp-cli.Dockerfile -t alphp:cli
+# @build-example docker build . -f alphp-cli.Dockerfile -t alphp/alphp:cli
 #
 
 FROM alphp/alphp:base
@@ -17,7 +17,7 @@ LABEL maintainer="inhere <cloud798@126.com>" version="1.0"
 
 ENV HIREDIS_VERSION=0.13.3 \
     PHALCON_VERSION=3.3.2 \
-    SWOOLE_VERSION=2.1.2 \
+    SWOOLE_VERSION=2.1.3 \
     MONGO_VERSION=1.4.2
 
 ##
