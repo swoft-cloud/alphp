@@ -1,12 +1,25 @@
-# PHP service
+# alpine PHP env
 
-## 基于alpine的环境
+基于alpine的环境微型php环境。构建完成的镜像只有30-40M
+
+共有几个镜像
+
+- `alphp/alphp:base` 基础镜像，后几个镜像基于它。(含有php和一些通用的扩展)
+- `alphp/alphp:cli` php cli环境镜像，含有swoole 2 和 mongodb 扩展
+
+## 直接拉取
+
+```bash
+docker pull alphp/alphp:base
+```
+
+## 本地构建
 
 - 构建基础镜像
 
 ```sh
 cd services/php
-docker build . -f alphp-base.Dockerfile -t alphp:base
+docker build . -f alphp-base.Dockerfile -t alphp/alphp:base
 ```
 
 - 添加额外扩展
@@ -14,16 +27,18 @@ docker build . -f alphp-base.Dockerfile -t alphp:base
 ext: `swoole, mongodb`
 
 ```sh
-docker build . -f alphp-cli.Dockerfile -t alphp:cli
+docker build . -f alphp-cli.Dockerfile -t alphp/alphp:cli
 
 // 在alphp:cli 的基础上，含有 nginx php-fpm
-docker build . -f alphp-fpm.Dockerfile -t alphp:fpm
+docker build . -f alphp-fpm.Dockerfile -t alphp/alphp:fpm
 
 // 在alphp:cli 的基础上，含有 nginx php-fpm 额外包含一些常用工具： vim wget git zip telnet ab 等
-docker build . -f alphp-dev.Dockerfile -t alphp:dev
+docker build . -f alphp-dev.Dockerfile -t alphp/alphp:dev
 ```
 
-## 更改时区
+## 一些有用的
+
+### 更改时区
 
 ```
 Asia/Shanghai
@@ -31,7 +46,13 @@ RUN sed -i "s/;date.timezone =.*/date.timezone = America\/New_York/" /etc/php5/f
 RUN sed -i "s/;date.timezone =.*/date.timezone = America\/New_York/" /etc/php5/cli/php.ini
 ```
 
-## 额外扩展
+### 重新生成 composer autoload
+
+```
+composer up nothing
+```
+
+### 额外的php扩展
 
 ```
 memcache
@@ -48,94 +69,104 @@ msgpack  -- MessagePack 数据格式实现
 yaconf  -- 持久配置容器(php7+)
 ```
 
-## add composer tool
+### add composer tool
 
 ```
 ADD tools/composer.phar /usr/local/bin/composer
 RUN chmod 755 /usr/local/bin/composer
 ```
 
-## some tool use
+## 工具推荐
 
 ### 工具列表
 
 - composer 包管理
 - phpunit 单元测试
 - phpmd 代码检查
-- apigen API文档生成
-- phpDocumentor API文档生成
-- sami API文档生成
+- 类参考文档生成
 - [deployer](https://deployer.org/releases/v4.0.1/deployer.phar) 一个用PHP编写的部署工具支持流行的框架
+- [xhprof 安装](install-xhprof.md)
 
-### 重新生成 composer autoload
+## 类参考文档生成
 
-```
-composer up nothing
-```
+- 使用 sami（推荐）
 
-## 下载安装xhprof
-
-from http://www.open-open.com/lib/view/open1453899928714.html
-
-- 下载编译安装的命令如下：
-
-```
-$ wget https://github.com/phacility/xhprof/archive/master.zip
-$ unzip ./xhprof_master.zip
-$ cd ./xhprof_master/extension
-$ /usr/local/php/bin/phpize
-$ ./configure --with-php-config=/usr/local/php/bin/php-config
-$ make
-$ make install
+```bash
+$ ./vendor/bin/sami.phar -V
 ```
 
-- 启用 xhprof 扩展， 检查安装 `php -m`
+生成：
 
-- 拷贝xhprof相关程序到指定目录:
-
-```
-$ mkdir -p /www/sites/xhprof
-$ cp -r ./xhprof_master/xhprof_html /www/sites/xhprof
-$ cp -r ./xhprof_master/xhprof_lib /www/sites/xhprof
+```bash
+$ php ./vendor/bin/sami.phar update build/sami.conf.php
 ```
 
-- 修改nginx配置，以便通过url访问性能数据:
+分开执行：
 
-在nginx中增加如下代码：
+```bash
+// The parse command parses a project and generates a database
+$ php ./vendor/bin/sami.phar parse config/symfony.php
 
-```
-server {
-    listen  8999;
-    root    /opt/sites/xhprof/;
-    index  index.php index.html;
-    location ~ .*\.php$ {
-        add_header  Cache-Control "no-cache, no-store, max-age=0, must-revalidate";
-        add_header  Pragma  no-cache;
-        add_header Access-Control-Allow-Origin *;
-        add_header      Via "1.0 xgs-150";
-        fastcgi_pass   127.0.0.1:9000;
-        fastcgi_index  index.php;
-        include fastcgi.conf;
-        fastcgi_connect_timeout 300;
-        fastcgi_send_timeout 300;
-        fastcgi_read_timeout 300;
-    }
-}
+// The render command renders a project as a static set of HTML files
+$ php ./vendor/bin/sami.phar render config/symfony.php
 ```
 
-## install swoole
+- 使用 apigen
+
+```bash
+$ ./vendor/bin/apigen.phar -V
+$ ./vendor/bin/apigen.phar generate --help
+$ ./vendor/bin/apigen.phar generate -s {source code dir} -d {doc generate dir}
+```
+
+- 使用phpDocumentor
+
+```bash
+$ ./vendor/bin/phpDocumentor.phar -V
+phpDocumentor version v2.9.0
+$ ./vendor/bin/phpDocumentor.phar run -d {source code dir} -t {doc generate dir}
+```
+
+### 手动管理 php-fpm
+
+```bash
+#关闭php-fpm
+kill -INT `cat /usr/local/php/var/run/php-fpm.pid`
+
+#重启php-fpm
+kill -USR2 `cat /usr/local/php/var/run/php-fpm.pid`
+```
+
+### 端口检查 lsof
+
+```
+apt-get install lsof
+```
+
+### ab 压力测试
+
+安装
+
+```
+// ubuntu
+apt-get install apache2-utils
+// centos
+yum install httpd-tools
+```
+
+## 安装 swoole
 
 官网 swoole.com
 安装相关扩展 redis, zip, mbstring, inotify, pdo_mysql
 
 ### 相关库
 
-- hiredis https://github.com/redis/hiredis
-- nghttp2 https://github.com/tatsuhiro-t/nghttp2
+- [hiredis](https://github.com/redis/hiredis) 异步redis操作支持
+- [nghttp2](https://github.com/tatsuhiro-t/nghttp2) http2支持
 
 ### 编译命令
 
-```
+```bash
 # phpize
 # ./configure --enable-swoole-debug --enable-async-redis --enable-openssl --enable-sockets --enable-coroutine --with-php-config=/usr/local/bin/php-config
 # make clean
@@ -150,56 +181,10 @@ server {
 - `--enable-swoole-debug`  // 打开调试日志，开启此选项后swoole将打印各类细节的调试日志。生产环境不要启用。
 - `--enable-sockets`       // 增加对sockets资源的支持，依赖sockets扩展
 - `--enable-async-redis`   // 增加异步Redis客户端支持， 依赖hiredis库
-- `--enable-openssl`       // 启用SSL支持
+- `--enable-openssl`       // 启用SSL支持,依赖openssl库
 - `--enable-http2`         // 增加对HTTP2的支持，依赖nghttp2库. 必须开启openssl
 - `--enable-coroutine`       // 启用协程能力
 
-
-## internal api generate
-
-### 使用 apigen
-
-```
-$ ./vendor/bin/apigen.phar -V
-$ ./vendor/bin/apigen.phar generate --help
-$ ./vendor/bin/apigen.phar generate -s {source code dir} -d {doc generate dir}
-```
-
-### 使用phpDocumentor
-
-```
-$ ./vendor/bin/phpDocumentor.phar -V
-phpDocumentor version v2.9.0
-$ ./vendor/bin/phpDocumentor.phar run -d {source code dir} -t {doc generate dir}
-```
-
-### 使用 sami
-
-```
-$ ./vendor/bin/sami.phar -V
-
-// The parse command parses a project and generates a database
-$ php ./vendor/bin/sami.phar parse config/symfony.php
-
-// The render command renders a project as a static set of HTML files
-$ php ./vendor/bin/sami.phar render config/symfony.php
-```
-
-use:
-
-```
-$ php ./vendor/bin/sami.phar update build/sami.conf.php
-```
-
-- how to operate php-fpm by command
-
-```
-#关闭php-fpm
-kill -INT `cat /usr/local/php/var/run/php-fpm.pid`
-
-#重启php-fpm
-kill -USR2 `cat /usr/local/php/var/run/php-fpm.pid`
-```
 
 ## 一些信息
 
@@ -213,17 +198,6 @@ kill -USR2 `cat /usr/local/php/var/run/php-fpm.pid`
 - php源码目录：`/usr/src` -- 运行 `docker-php-source extract` 可解压出来
 - 扩展编译配置：`/usr/local/etc/php/conf.d/`
 - 扩展编译目录：`/usr/local/lib/php/extensions/no-debug-non-zts-20131226/`
-
-## some command
-
-```
-// install php by command(apt-get).
-service php5-fpm reload
-// if from base php image
-service php-fpm reload
-
-service nginx reload
-```
 
 ## 库推荐
 
@@ -245,19 +219,3 @@ service nginx reload
 
 ## 工具
 
-### 端口检查 lsof
-
-```
-apt-get install lsof
-```
-
-### ab 压力测试
-
-安装
-
-```
-// ubuntu
-apt-get install apache2-utils
-// centos
-yum install httpd-tools
-```

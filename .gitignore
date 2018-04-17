@@ -1,0 +1,11 @@
+*.log
+.env
+.idea/
+.phpintel/
+# https://cbiol22u.mirror.aliyuncs.com
+/data/volumes/
+/data/images/
+vhosts/
+/docker-compose.loc.yml
+/docker-compose.yml
+/www/default

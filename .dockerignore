@@ -1,0 +1,24 @@
+# 定义忽略文件
+# 因为 docker build时会发送 context 目录的所有文件到 Docker daemon
+node_modules/
+.git/
+www/
+conf/
+logs/
+tmp/
+# data/
+# tools/
+# services/
+data/volumes/
+data/packages/php-tools/
+data/packages/php-ext/
+data/packages/sphinx/
+data/images/
+Dockerfile
+*.log
+*.bak
+*.Dockerfile
+*.tar.gz
+*.tgz
+*.zip
+*.md

@@ -26,8 +26,7 @@ services:
             - ./tmp/data/mysql:/var/lib/mysql
 
     redis:
-        image: redis
-        container_name: reds-dev
+        image: redis:3-alpine
+        container_name: redis-dev
         ports:
             - "6379:6379"
-
