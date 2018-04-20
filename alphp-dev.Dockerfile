@@ -36,7 +36,7 @@ RUN set -ex \
         # && rm /etc/nginx/conf.d/default.conf /etc/nginx/nginx.conf \
 
         # - config nginx
-        && mkdir /run/nginx
+        && mkdir /run/nginx \
 
         # - config PHP-FPM
         && cd /etc/php7 \

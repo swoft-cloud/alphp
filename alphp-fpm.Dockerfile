@@ -26,7 +26,7 @@ RUN set -ex \
         && rm -rf /var/cache/apk/* /tmp/* /usr/share/man /usr/share/php7 \
 
         # - config nginx
-        && mkdir /run/nginx
+        && mkdir /run/nginx \
 
         # - config PHP-FPM
         && cd /etc/php7 \
