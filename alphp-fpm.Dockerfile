@@ -25,6 +25,9 @@ RUN set -ex \
         && apk del --purge *-dev \
         && rm -rf /var/cache/apk/* /tmp/* /usr/share/man /usr/share/php7 \
 
+        # - config nginx
+        && mkdir /run/nginx
+
         # - config PHP-FPM
         && cd /etc/php7 \
         && { \
@@ -35,10 +38,19 @@ RUN set -ex \
             echo "group = www"; \
         } | tee php-fpm.d/custom.conf \
 
+        # - config site
+        && chown -R www:www /var/www \
+        && { \
+            echo "#!/bin/sh"; \
+            echo "nginx -g 'daemon on;'"; \
+            # echo "php /var/www/uem.phar taskServer:start -d"; \
+            echo "php-fpm7 -F"; \
+        } | tee /run.sh \
+        && chmod 755 /run.sh \
         && echo -e "\033[42;37m Build Completed :).\033[0m\n"
 
-EXPOSE 9501 9000
+EXPOSE 9501 80
 VOLUME ["/var/www", "/data"]
 WORKDIR "/var/www"
 
-CMD ["php-fpm7"]
+CMD /run.sh

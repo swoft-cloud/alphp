@@ -34,11 +34,25 @@ RUN set -ex \
         && apk del --purge *-dev \
         && rm -rf /var/cache/apk/* /tmp/* /usr/share/man \
         # && rm /etc/nginx/conf.d/default.conf /etc/nginx/nginx.conf \
+
+        # - config nginx
+        && mkdir /run/nginx
+
+        # - config PHP-FPM
+        && cd /etc/php7 \
+        && { \
+            echo "[global]"; \
+            echo "pid = /var/run/php-fpm.pid"; \
+            echo "[www]"; \
+            echo "user = www"; \
+            echo "group = www"; \
+        } | tee php-fpm.d/custom.conf \
+
         # config site
         && chown -R www:www /var/www \
         && { \
             echo "#!/bin/sh"; \
-            echo "nginx -g 'daemon off;'"; \
+            echo "nginx -g 'daemon on;'"; \
             # echo "php /var/www/uem.phar taskServer:start -d"; \
             echo "php-fpm7 -F"; \
         } | tee /run.sh \
@@ -46,7 +60,7 @@ RUN set -ex \
 
 VOLUME ["/var/www", "/data"]
 
-EXPOSE 9501 9502 80
+EXPOSE 9501 80
 
 # COPY docker/config/nginx.conf /etc/nginx/nginx.conf
 # COPY docker/config/app-vhost.conf /etc/nginx/conf.d/app-vhost.conf
