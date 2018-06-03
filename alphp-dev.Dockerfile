@@ -30,7 +30,7 @@ RUN set -ex \
         && php -m \
         # install some tools
         && apk update \
-        && apk add --no-cache nginx php7-fpm vim wget net-tools git zip unzip apache2-utils \
+        && apk add --no-cache nginx php7-fpm vim wget net-tools git zip unzip apache2-utils mysql-client redis \
         && apk del --purge *-dev \
         && rm -rf /var/cache/apk/* /tmp/* /usr/share/man \
         # && rm /etc/nginx/conf.d/default.conf /etc/nginx/nginx.conf \
