@@ -1,6 +1,6 @@
-# alpine PHP env
+# alpine php env
 
-基于alpine的微型php docker环境，php 是 `7.1.x`, 包含最新版本swoole。构建完成的镜像只有30-40多M
+`alphp` - 基于alpine的微型php docker环境，php 是 `7.1.x`, 包含最新版本swoole。构建完成的镜像只有30-40多M
 
 共有几个镜像
 
@@ -20,6 +20,8 @@ docker pull alphp/alphp:cli
 docker pull alphp/alphp:fpm
 docker pull alphp/alphp:dev
 ```
+
+> hub.docker 地址： https://hub.docker.com/r/alphp/alphp/
 
 ## 本地构建
 
