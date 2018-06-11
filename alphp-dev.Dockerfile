@@ -34,6 +34,10 @@ RUN set -ex \
         && apk del --purge *-dev \
         && rm -rf /var/cache/apk/* /tmp/* /usr/share/man \
         # && rm /etc/nginx/conf.d/default.conf /etc/nginx/nginx.conf \
+        
+        # install latest composer
+        && wget https://getcomposer.org/composer.phar \
+        && mv composer.phar /usr/local/bin/composer \
 
         # - config nginx
         && mkdir /run/nginx \
