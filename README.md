@@ -55,6 +55,12 @@ docker build . -f alphp-dev.Dockerfile -t alphp/alphp:dev
 
 ## 一些有用的
 
+### 更改软件源
+
+```text
+sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/' /etc/apk/repositories
+```
+
 ### 镜像中的一些信息
 
 - php execute file: `/usr/bin/php`

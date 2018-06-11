@@ -32,7 +32,7 @@ ENV APP_ENV=${app_env:-"pdt"} \
 
 RUN set -ex \
         # change apk source repo
-        && sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/' /etc/apk/repositories \
+        # && sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/' /etc/apk/repositories \
         && apk update \
         && apk add --no-cache \
         # Install base packages
