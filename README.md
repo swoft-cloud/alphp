@@ -5,7 +5,7 @@
 共有几个镜像
 
 - `alphp/alphp:base` 基础镜像，后几个镜像基于它。(含有php和一些通用的扩展)
-- `alphp/alphp:cli` php cli环境镜像，含有swoole 2 和 mongodb 扩展
+- `alphp/alphp:cli` php cli环境镜像，含有swoole 和 mongodb 扩展
 - `alphp/alphp:fpm` 在 `alphp/alphp:cli` 的基础上，含有 nginx php-fpm
 - `alphp/alphp:dev` 在 `alphp/alphp:cli` 的基础上，含有 nginx php-fpm 并额外包含一些常用工具：vim wget git zip telnet ab 等
 
