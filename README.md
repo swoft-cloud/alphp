@@ -61,6 +61,16 @@ docker build . -f alphp-dev.Dockerfile -t alphp/alphp:dev
 sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/' /etc/apk/repositories
 ```
 
+### Dockerfile注意
+
+- 如果想要主进程接收 `docker stop` 信号(`SIGTERM`)，一定要用 `ENTRYPOINT` 或者 `RUN` 来启动运行主进程，不能使用 CMD。
+
+> CMD 会始终使用 sh -c command 来执行命令，这样PID = 1 的就不是真实命令所在进程了
+
+```dockerfile
+ENTRYPOINT ["php", "/var/www/bin/cli", "taskServer:restart"]
+```
+
 ### 镜像中的一些信息
 
 - php execute file: `/usr/bin/php`
@@ -213,20 +223,4 @@ yum install httpd-tools
 ## 库推荐
 
 - [workerman](https://github.com/walkor/workerman)
-- [workerman-statistics](https://github.com/walkor/workerman-statistics)
 - [swoole](https://github.com/swoole/swoole-src)
-
-### solariumphp/solarium
-
-[solariumphp/solarium](https://github.com/solariumphp/solarium)
-
-搜索引擎solr的php客户端
-
-### elastic/elasticsearch-php
-
-[elastic/elasticsearch-php](https://github.com/elastic/elasticsearch-php)
-
-搜索引擎elasticsearch的官方php客户端
-
-## 工具
-

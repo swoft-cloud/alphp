@@ -17,7 +17,7 @@ LABEL maintainer="inhere <cloud798@126.com>" version="1.0"
 
 ENV HIREDIS_VERSION=0.13.3 \
     PHALCON_VERSION=3.3.2 \
-    SWOOLE_VERSION=4.0.3 \
+    SWOOLE_VERSION=4.0.4 \
     MONGO_VERSION=1.4.2
 
 ##
