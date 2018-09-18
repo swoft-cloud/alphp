@@ -1,3 +1,24 @@
+# Supported tags and respective Dockerfile links
+
+- base([alphp-base.Dockerfile](https://github.com/swoft-cloud/alphp/blob/master/alphp-base.Dockerfile))
+- cli([alphp-cli.Dockerfile](https://github.com/swoft-cloud/alphp/blob/master/alphp-cli.Dockerfile))
+- fpm([alphp-fpm.Dockerfile](https://github.com/swoft-cloud/alphp/blob/master/alphp-fpm.Dockerfile))
+- dev([alphp-dev.Dockerfile](https://github.com/swoft-cloud/alphp/blob/master/alphp-dev.Dockerfile))
+
+---
+
+- base-3.7([alphp-base.Dockerfile](https://github.com/swoft-cloud/alphp/blob/alpine3.7/alphp-base.Dockerfile))
+- cli-3.7([alphp-cli.Dockerfile](https://github.com/swoft-cloud/alphp/blob/alpine3.7/alphp-cli.Dockerfile))
+- fpm-3.7([alphp-fpm.Dockerfile](https://github.com/swoft-cloud/alphp/blob/alpine3.7/alphp-fpm.Dockerfile))
+- dev-3.7([alphp-dev.Dockerfile](https://github.com/swoft-cloud/alphp/blob/alpine3.7/alphp-dev.Dockerfile))
+
+---
+
+- base-3.8([alphp-base.Dockerfile](https://github.com/swoft-cloud/alphp/blob/alpine3.8/alphp-base.Dockerfile))
+- cli-3.8([alphp-cli.Dockerfile](https://github.com/swoft-cloud/alphp/blob/alpine3.8/alphp-cli.Dockerfile))
+- fpm-3.8([alphp-fpm.Dockerfile](https://github.com/swoft-cloud/alphp/blob/alpine3.8/alphp-fpm.Dockerfile))
+- dev-3.8([alphp-dev.Dockerfile](https://github.com/swoft-cloud/alphp/blob/alpine3.8/alphp-dev.Dockerfile))
+
 # alpine php env
 
 `alphp` - 基于alpine的微型php docker环境，php 是 `7.1.x`, 包含最新版本swoole。构建完成的镜像只有30-40M
