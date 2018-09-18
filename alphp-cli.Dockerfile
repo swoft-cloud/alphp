@@ -8,7 +8,7 @@
 # @build-example docker build . -f alphp-cli.Dockerfile -t swoft/alphp:cli
 #
 
-FROM swoft/alphp:base
+FROM swoft/alphp:base-3.7
 LABEL maintainer="inhere <cloud798@126.com>" version="1.0"
 
 ##
