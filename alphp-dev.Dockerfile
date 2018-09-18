@@ -10,7 +10,6 @@
 
 FROM swoft/alphp:cli as builder
 
-
 FROM swoft/alphp:base
 LABEL maintainer="inhere <cloud798@126.com>" version="1.0"
 

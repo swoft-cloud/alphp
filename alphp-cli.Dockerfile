@@ -16,9 +16,9 @@ LABEL maintainer="inhere <cloud798@126.com>" version="1.0"
 ##
 
 ENV HIREDIS_VERSION=0.13.3 \
-    PHALCON_VERSION=3.3.2 \
+    # PHALCON_VERSION=3.3.2 \
     SWOOLE_VERSION=4.1.2 \
-    MONGO_VERSION=1.4.2
+    MONGO_VERSION=1.5.2
 
 ##
 # install php extensions
@@ -35,19 +35,17 @@ RUN set -ex \
         && curl -SL "https://github.com/swoole/swoole-src/archive/v${SWOOLE_VERSION}.tar.gz" -o swoole.tar.gz \
         # && curl -SL "https://github.com/phalcon/cphalcon/archive/v${PHALCON_VERSION}.tar.gz" -o cphalcon.tar.gz \
         # && curl -SL "https://github.com/mongodb/mongo-php-driver/archive/v${MONGO_VERSION}.tgz" -o mongodb.tgz \
-        # && curl -SL "http://pecl.php.net/get/mongodb-${MONGO_VERSION}.tgz" -o mongodb.tgz \
+        && curl -SL "http://pecl.php.net/get/mongodb-${MONGO_VERSION}.tgz" -o mongodb.tgz \
         && ls -alh \
         && apk update \
         && apk add --no-cache --virtual .phpize-deps \
         $PHPIZE_DEPS \
-        # for mongodb ext
-        openssl-dev \
         # for swoole ext
-        libaio linux-headers libaio-dev \
+        libaio linux-headers libaio-dev openssl-dev libstdc++ \
         # php extension: mongodb
-        # && pecl install mongodb.tgz \
-        && pecl install mongodb \
-        && echo "extension=mongodb.so" > /etc/php7/conf.d/20_mongodb.ini  \
+        && pecl install mongodb.tgz \
+        # && pecl install mongodb \
+        && echo "extension=mongodb.so" > /etc/php7/conf.d/20_mongodb.ini \
         # php extension: phalcon framework
         # && tar -xf cphalcon.tar.gz \
         # && apk add --no-cache --virtual .phpize-deps $PHPIZE_DEPS \
