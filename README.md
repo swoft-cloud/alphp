@@ -1,6 +1,6 @@
 # alpine php env
 
-`alphp` - 基于alpine的微型php docker环境，php 是 `7.1.x`, 包含最新版本swoole。构建完成的镜像只有30-40多M
+`alphp` - 基于alpine的微型php docker环境，php 是 `7.1.x`, 包含最新版本swoole。构建完成的镜像只有30-40M
 
 共有几个镜像
 
@@ -217,7 +217,7 @@ yum install httpd-tools
 - `--enable-async-redis`   // 增加异步Redis客户端支持， 依赖hiredis库
 - `--enable-openssl`       // 启用SSL支持,依赖openssl库
 - `--enable-http2`         // 增加对HTTP2的支持，依赖nghttp2库. 必须开启openssl
-- `--enable-coroutine`       // 启用协程能力
+- `--enable-coroutine`     // 启用协程能力
 
 
 ## 库推荐

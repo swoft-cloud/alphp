@@ -5,7 +5,7 @@
 # @link https://hub.docker.com/_/php/         php image
 # @link https://github.com/docker-library/php php dockerfiles
 # ------------------------------------------------------------------------------------
-# @build-example docker build . -f alphp-base.Dockerfile -t alphp/alphp:base
+# @build-example docker build . -f alphp-base.Dockerfile -t swoft/alphp:base
 #
 
 FROM alpine:3.7
@@ -32,7 +32,7 @@ ENV APP_ENV=${app_env:-"pdt"} \
 
 RUN set -ex \
         # change apk source repo
-        # && sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/' /etc/apk/repositories \
+        && sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/' /etc/apk/repositories \
         && apk update \
         && apk add --no-cache \
         # Install base packages
@@ -45,7 +45,6 @@ RUN set -ex \
         openssl  \
         tzdata \
         pcre \
-
         # install php7 and some extensions
         php7 \
         # php7-common \
@@ -94,22 +93,18 @@ RUN set -ex \
             echo "memory_limit=1024M"; \
             echo "date.timezone=${TIMEZONE}"; \
         } | tee conf.d/99-overrides.ini \
-
         # - config timezone
         && ln -sf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime \
         && echo "${TIMEZONE}" > /etc/timezone \
-
         # ---------- some config work ----------
         # - ensure 'www' user exists
         && addgroup -S ${add_user} \
         && adduser -D -S -G ${add_user} ${add_user} \
-
         # - create user dir
         && mkdir -p /data \
         && chown -R ${add_user}:${add_user} /data \
-
         && echo -e "\033[42;37m Build Completed :).\033[0m\n"
 
 # EXPOSE 9000
 VOLUME ["/var/www", "/data"]
-WORKDIR "/var/www"
+WORKDIR /var/www

@@ -5,10 +5,10 @@
 # @link https://hub.docker.com/_/php/         php image
 # @link https://github.com/docker-library/php php dockerfiles
 # ------------------------------------------------------------------------------------
-# @build-example docker build . -f alphp-fpm.Dockerfile -t alphp/alphp:fpm
+# @build-example docker build . -f alphp-fpm.Dockerfile -t swoft/alphp:fpm
 #
 
-FROM alphp/alphp:cli
+FROM swoft/alphp:cli
 LABEL maintainer="inhere <cloud798@126.com>" version="1.0"
 
 ##
@@ -24,10 +24,8 @@ RUN set -ex \
 			nginx \
         && apk del --purge *-dev \
         && rm -rf /var/cache/apk/* /tmp/* /usr/share/man /usr/share/php7 \
-
         # - config nginx
         && mkdir /run/nginx \
-
         # - config PHP-FPM
         && cd /etc/php7 \
         && { \
@@ -37,7 +35,6 @@ RUN set -ex \
             echo "user = www"; \
             echo "group = www"; \
         } | tee php-fpm.d/custom.conf \
-
         # - config site
         && chown -R www:www /var/www \
         && { \
@@ -51,6 +48,6 @@ RUN set -ex \
 
 EXPOSE 9501 80
 VOLUME ["/var/www", "/data"]
-WORKDIR "/var/www"
+WORKDIR /var/www
 
 CMD /run.sh

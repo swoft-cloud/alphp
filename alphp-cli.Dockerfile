@@ -5,10 +5,10 @@
 # @link https://hub.docker.com/_/php/         php image
 # @link https://github.com/docker-library/php php dockerfiles
 # ------------------------------------------------------------------------------------
-# @build-example docker build . -f alphp-cli.Dockerfile -t alphp/alphp:cli
+# @build-example docker build . -f alphp-cli.Dockerfile -t swoft/alphp:cli
 #
 
-FROM alphp/alphp:base
+FROM swoft/alphp:base
 LABEL maintainer="inhere <cloud798@126.com>" version="1.0"
 
 ##
@@ -44,12 +44,10 @@ RUN set -ex \
         openssl-dev \
         # for swoole ext
         libaio linux-headers libaio-dev \
-
         # php extension: mongodb
         # && pecl install mongodb.tgz \
         && pecl install mongodb \
         && echo "extension=mongodb.so" > /etc/php7/conf.d/20_mongodb.ini  \
-
         # php extension: phalcon framework
         # && tar -xf cphalcon.tar.gz \
         # && apk add --no-cache --virtual .phpize-deps $PHPIZE_DEPS \
@@ -60,14 +58,12 @@ RUN set -ex \
         # && cp ../tests/_ci/phalcon.ini $(php-config --configure-options | grep -o "with-config-file-scan-dir=\([^ ]*\)" | awk -F'=' '{print $2}') \
         # && cd ../../ \
         # && rm -r cphalcon-${PHALCON_VERSION} \
-
         # hiredis - redis C client, provide async operate support for Swoole
         # && wget -O hiredis.tar.gz -c https://github.com/redis/hiredis/archive/v${HIREDIS_VERSION}.tar.gz \
         && cd /tmp \
         && tar -zxvf hiredis.tar.gz \
         && cd hiredis-${HIREDIS_VERSION} \
         && make -j && make install \
-
         # php extension: swoole
         && cd /tmp \
         && mkdir -p swoole \
@@ -83,9 +79,8 @@ RUN set -ex \
         && echo "extension=swoole.so" > /etc/php7/conf.d/20_swoole.ini \
         && apk del .phpize-deps \
         && rm -rf /var/cache/apk/* /tmp/* /usr/share/man \
-
         && echo -e "\033[42;37m Build Completed :).\033[0m\n"
 
 EXPOSE 9501
 
-WORKDIR "/var/www"
+WORKDIR /var/www

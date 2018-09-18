@@ -5,13 +5,13 @@
 # @link https://hub.docker.com/_/php/         php image
 # @link https://github.com/docker-library/php php dockerfiles
 # ------------------------------------------------------------------------------------
-# @build-example docker build . -f alphp-dev.Dockerfile -t alphp/alphp:dev
+# @build-example docker build . -f alphp-dev.Dockerfile -t swoft/alphp:dev
 #
 
-FROM alphp/alphp:cli as builder
+FROM swoft/alphp:cli as builder
 
 
-FROM alphp/alphp:base
+FROM swoft/alphp:base
 LABEL maintainer="inhere <cloud798@126.com>" version="1.0"
 
 WORKDIR /usr/lib/php7/modules
@@ -34,14 +34,11 @@ RUN set -ex \
         && apk del --purge *-dev \
         && rm -rf /var/cache/apk/* /tmp/* /usr/share/man \
         # && rm /etc/nginx/conf.d/default.conf /etc/nginx/nginx.conf \
-        
         # install latest composer
         && wget https://getcomposer.org/composer.phar \
         && mv composer.phar /usr/local/bin/composer \
-
         # - config nginx
         && mkdir /run/nginx \
-
         # - config PHP-FPM
         && cd /etc/php7 \
         && { \
@@ -51,7 +48,6 @@ RUN set -ex \
             echo "user = www"; \
             echo "group = www"; \
         } | tee php-fpm.d/custom.conf \
-
         # config site
         && chown -R www:www /var/www \
         && { \
