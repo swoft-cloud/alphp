@@ -21,6 +21,8 @@
 
 # alpine php env
 
+[![Docker Build Status](https://img.shields.io/docker/build/swoft/alphp.svg)](https://hub.docker.com/r/swoft/alphp/)
+
 `alphp` - 基于alpine的微型php docker环境，php 是 `7.1.x`, 包含最新版本swoole。构建完成的镜像只有30-40M
 
 共有几个镜像
