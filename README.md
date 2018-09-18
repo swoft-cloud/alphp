@@ -4,53 +4,53 @@
 
 共有几个镜像
 
-- `alphp/alphp:base` 基础镜像，后几个镜像基于它。(含有php和一些通用的扩展)
-- `alphp/alphp:cli` php cli环境镜像，含有swoole 和 mongodb 扩展
-- `alphp/alphp:fpm` 在 `alphp/alphp:cli` 的基础上，含有 nginx php-fpm
-- `alphp/alphp:dev` 在 `alphp/alphp:cli` 的基础上，含有 nginx php-fpm 并额外包含一些常用工具：vim wget git zip telnet ab 等
+- `swoft/alphp:base` 基础镜像，后几个镜像基于它。(含有php和一些通用的扩展)
+- `swoft/alphp:cli` php cli环境镜像，含有swoole 和 mongodb 扩展
+- `swoft/alphp:fpm` 在 `swoft/alphp:cli` 的基础上，含有 nginx php-fpm
+- `swoft/alphp:dev` 在 `swoft/alphp:cli` 的基础上，含有 nginx php-fpm 并额外包含一些常用工具：vim wget git zip telnet ab 等
 
 ## 直接拉取
 
 ```bash
-docker pull alphp/alphp:base
+docker pull swoft/alphp:base
 ```
 
 ```bash
-docker pull alphp/alphp:cli
-docker pull alphp/alphp:fpm
-docker pull alphp/alphp:dev
+docker pull swoft/alphp:cli
+docker pull swoft/alphp:fpm
+docker pull swoft/alphp:dev
 ```
 
-> hub.docker 地址： https://hub.docker.com/r/alphp/alphp/
+> hub.docker 地址： https://hub.docker.com/r/swoft/alphp/
 
 ## 本地构建
 
 ### 构建基础镜像
 
 ```bash
-docker build . -f alphp-base.Dockerfile -t alphp/alphp:base
+docker build . -f alphp-base.Dockerfile -t swoft/alphp:base
 ```
 
 ### 构建功能镜像
 
-- 构建 `alphp/alphp:cli`
+- 构建 `swoft/alphp:cli`
 
 ```bash
-docker build . -f alphp-cli.Dockerfile -t alphp/alphp:cli
+docker build . -f alphp-cli.Dockerfile -t swoft/alphp:cli
 ```
 
-- 构建 `alphp/alphp:fpm`
+- 构建 `swoft/alphp:fpm`
 
 ```bash
-// 在alphp/alphp:cli 的基础上，含有 nginx php-fpm
-docker build . -f alphp-fpm.Dockerfile -t alphp/alphp:fpm
+// 在swoft/alphp:cli 的基础上，含有 nginx php-fpm
+docker build . -f alphp-fpm.Dockerfile -t swoft/alphp:fpm
 ```
 
-- 构建 `alphp/alphp:dev`
+- 构建 `swoft/alphp:dev`
 
 ```bash
-// 在 alphp/alphp:cli 的基础上，含有 nginx php-fpm 额外包含一些常用工具：vim wget git zip telnet ab 等
-docker build . -f alphp-dev.Dockerfile -t alphp/alphp:dev
+// 在 swoft/alphp:cli 的基础上，含有 nginx php-fpm 额外包含一些常用工具：vim wget git zip telnet ab 等
+docker build . -f alphp-dev.Dockerfile -t swoft/alphp:dev
 ```
 
 ## 一些有用的
