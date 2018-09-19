@@ -38,10 +38,9 @@ RUN set -ex \
         && curl -SL "http://pecl.php.net/get/mongodb-${MONGO_VERSION}.tgz" -o mongodb.tgz \
         && ls -alh \
         && apk update \
-        && apk add --no-cache --virtual .phpize-deps \
-        $PHPIZE_DEPS \
+        && apk add --no-cache --virtual .phpize-deps $PHPIZE_DEPS \
         # for swoole ext
-        libaio linux-headers libaio-dev openssl-dev libstdc++ \
+        && apk add --no-cache libaio linux-headers libaio-dev openssl-dev libstdc++ \
         # php extension: mongodb
         && pecl install mongodb.tgz \
         # && pecl install mongodb \
