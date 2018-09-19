@@ -79,12 +79,8 @@ RUN set -ex \
         php7-zip \
         php7-zlib \
         && apk del --purge *-dev \
-        && rm -rf /var/cache/apk/* /tmp/* /usr/share/man /usr/share/php7
-
-##
-# ---------- some config,clear work ----------
-##
-RUN set -ex \
+        && rm -rf /var/cache/apk/* /tmp/* /usr/share/man /usr/share/php7 \
+        #  ---------- some config,clear work ----------
         && cd /etc/php7 \
         # - config PHP
         && { \
