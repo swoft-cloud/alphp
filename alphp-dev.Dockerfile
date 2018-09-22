@@ -17,7 +17,6 @@ WORKDIR /usr/lib/php7/modules
 
 COPY --from=builder /usr/local/lib/libhiredis.so.0.13 /usr/local/lib/libhiredis.so.0.13
 COPY --from=builder /usr/lib/php7/modules/mongodb.so mongodb.so
-# COPY --from=builder /usr/lib/php7/modules/phalcon.so phalcon.so
 COPY --from=builder /usr/lib/php7/modules/swoole.so swoole.so
 
 WORKDIR /var/www
@@ -29,7 +28,9 @@ RUN set -ex \
         && php -m \
         # install some tools
         && apk update \
-        && apk add --no-cache nginx php7-fpm vim wget net-tools git zip unzip apache2-utils mysql-client redis \
+        && apk add --no-cache \
+            php7-fpm php7-pcntl \
+            nginx vim wget net-tools git zip unzip apache2-utils mysql-client redis \
         && apk del --purge *-dev \
         && rm -rf /var/cache/apk/* /tmp/* /usr/share/man \
         # && rm /etc/nginx/conf.d/default.conf /etc/nginx/nginx.conf \

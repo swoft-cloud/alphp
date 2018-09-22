@@ -17,14 +17,13 @@ LABEL maintainer="inhere <cloud798@126.com>" version="1.0"
 
 # --build-arg timezone=Asia/Shanghai
 ARG timezone
-# pdt pre test dev
-ARG app_env=pdt
-ARG add_user=www
+# prod pre test dev
+ARG app_env=prod
+# default use www-data user
+ARG add_user=www-data
 
-ENV APP_ENV=${app_env:-"pdt"} \
-    TIMEZONE=${timezone:-"Asia/Shanghai"} \
-    #  install and remove building packages
-    PHPIZE_DEPS="autoconf dpkg-dev dpkg file g++ gcc libc-dev make php7-dev php7-pear pkgconf re2c pcre-dev zlib-dev"
+ENV APP_ENV=${app_env:-"prod"} \
+    TIMEZONE=${timezone:-"Asia/Shanghai"}
 
 ##
 # ---------- building ----------
@@ -35,34 +34,31 @@ RUN set -ex \
         && sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/' /etc/apk/repositories \
         && apk update \
         && apk add --no-cache \
-        # Install base packages
+        # Install base packages ('ca-certificates' will install 'nghttp2-libs')
         ca-certificates \
         curl \
         tar \
         xz \
         libressl \
         # openssh  \
-        openssl  \
+        # openssl  \
         tzdata \
         pcre \
         # install php7 and some extensions
         php7 \
         # php7-common \
-        php7-fpm \
         php7-bcmath \
         php7-curl \
         php7-ctype \
         php7-dom \
         php7-fileinfo \
-        # php7-filter \
         # php7-gettext \
         php7-iconv \
         php7-json \
         php7-mbstring \
         php7-mysqlnd \
         php7-openssl \
-        php7-opcache \
-        php7-pcntl \
+        # php7-opcache \
         php7-pdo \
         php7-pdo_mysql \
         php7-pdo_sqlite \
@@ -70,6 +66,8 @@ RUN set -ex \
         php7-posix \
         php7-redis \
         php7-simplexml \
+        php7-sockets \
+        php7-sodium \
         # php7-sqlite \
         php7-session \
         php7-sysvshm \
@@ -93,9 +91,9 @@ RUN set -ex \
         && ln -sf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime \
         && echo "${TIMEZONE}" > /etc/timezone \
         # ---------- some config work ----------
-        # - ensure 'www' user exists
-        && addgroup -S ${add_user} \
-        && adduser -D -S -G ${add_user} ${add_user} \
+        # - ensure 'www-data' user exists(82 is the standard uid/gid for "www-data" in Alpine)
+        && addgroup -g 82 -S ${add_user} \
+        && adduser -u 82 -D -S -G ${add_user} ${add_user} \
         # - create user dir
         && mkdir -p /data \
         && chown -R ${add_user}:${add_user} /data \

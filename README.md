@@ -1,9 +1,25 @@
-# Supported tags and respective Dockerfile links
+# Alpine PHP Docker
+
+[![Docker Build Status](https://img.shields.io/docker/build/swoft/alphp.svg)](https://hub.docker.com/r/swoft/alphp/)
+[![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/swoft/alphp.svg)](https://hub.docker.com/r/swoft/alphp)
+
+`alphp` - 基于alpine的微型php docker环境，php 是 `7.x`, 包含最新版本swoole。构建完成的镜像只有30-40M
+
+共有几个镜像
+
+- `swoft/alphp:base` 基础镜像，后几个镜像基于它。(含有php和一些通用的扩展)
+- `swoft/alphp:cli` php cli环境镜像，含有swoole 和 mongodb 扩展
+- `swoft/alphp:fpm` 在 `swoft/alphp:cli` 的基础上，含有 nginx php-fpm
+- `swoft/alphp:dev` 在 `swoft/alphp:cli` 的基础上，含有 nginx php-fpm 以及一些常用工具：vim wget git zip telnet ab 等
+
+# Dockerfile links
 
 - base([alphp-base.Dockerfile](https://github.com/swoft-cloud/alphp/blob/master/alphp-base.Dockerfile))
 - cli([alphp-cli.Dockerfile](https://github.com/swoft-cloud/alphp/blob/master/alphp-cli.Dockerfile))
 - fpm([alphp-fpm.Dockerfile](https://github.com/swoft-cloud/alphp/blob/master/alphp-fpm.Dockerfile))
 - dev([alphp-dev.Dockerfile](https://github.com/swoft-cloud/alphp/blob/master/alphp-dev.Dockerfile))
+
+base on **alpine 3.7**(php 7.1.x):
 
 ---
 
@@ -12,26 +28,14 @@
 - fpm-3.7([alphp-fpm.Dockerfile](https://github.com/swoft-cloud/alphp/blob/alpine3.7/alphp-fpm.Dockerfile))
 - dev-3.7([alphp-dev.Dockerfile](https://github.com/swoft-cloud/alphp/blob/alpine3.7/alphp-dev.Dockerfile))
 
+base on **alpine 3.8**(php 7.2.x):
+
 ---
 
 - base-3.8([alphp-base.Dockerfile](https://github.com/swoft-cloud/alphp/blob/alpine3.8/alphp-base.Dockerfile))
 - cli-3.8([alphp-cli.Dockerfile](https://github.com/swoft-cloud/alphp/blob/alpine3.8/alphp-cli.Dockerfile))
 - fpm-3.8([alphp-fpm.Dockerfile](https://github.com/swoft-cloud/alphp/blob/alpine3.8/alphp-fpm.Dockerfile))
 - dev-3.8([alphp-dev.Dockerfile](https://github.com/swoft-cloud/alphp/blob/alpine3.8/alphp-dev.Dockerfile))
-
-# alpine php env
-
-[![Docker Build Status](https://img.shields.io/docker/build/swoft/alphp.svg)](https://hub.docker.com/r/swoft/alphp/)
-[![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/swoft/alphp.svg)](https://hub.docker.com/r/swoft/alphp)
-
-`alphp` - 基于alpine的微型php docker环境，php 是 `7.1.x`, 包含最新版本swoole。构建完成的镜像只有30-40M
-
-共有几个镜像
-
-- `swoft/alphp:base` 基础镜像，后几个镜像基于它。(含有php和一些通用的扩展)
-- `swoft/alphp:cli` php cli环境镜像，含有swoole 和 mongodb 扩展
-- `swoft/alphp:fpm` 在 `swoft/alphp:cli` 的基础上，含有 nginx php-fpm
-- `swoft/alphp:dev` 在 `swoft/alphp:cli` 的基础上，含有 nginx php-fpm 并额外包含一些常用工具：vim wget git zip telnet ab 等
 
 ## 直接拉取
 
