@@ -44,12 +44,12 @@ RUN set -ex \
         && { \
             echo "[global]"; \
             echo "pid = /var/run/php-fpm.pid"; \
-            echo "[www]"; \
-            echo "user = www"; \
-            echo "group = www"; \
+            echo "[www-data]"; \
+            echo "user = www-data"; \
+            echo "group = www-data"; \
         } | tee php-fpm.d/custom.conf \
         # config site
-        && chown -R www:www /var/www \
+        && chown -R www-data:www-data /var/www \
         && { \
             echo "#!/bin/sh"; \
             echo "nginx -g 'daemon on;'"; \
