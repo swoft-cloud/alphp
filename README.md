@@ -19,18 +19,18 @@
 - fpm([alphp-fpm.Dockerfile](https://github.com/swoft-cloud/alphp/blob/master/alphp-fpm.Dockerfile))
 - dev([alphp-dev.Dockerfile](https://github.com/swoft-cloud/alphp/blob/master/alphp-dev.Dockerfile))
 
-base on **alpine 3.7**(php 7.1.x):
-
 ---
+
+base on **alpine 3.7**(php 7.1.x):
 
 - base-3.7([alphp-base.Dockerfile](https://github.com/swoft-cloud/alphp/blob/alpine3.7/alphp-base.Dockerfile))
 - cli-3.7([alphp-cli.Dockerfile](https://github.com/swoft-cloud/alphp/blob/alpine3.7/alphp-cli.Dockerfile))
 - fpm-3.7([alphp-fpm.Dockerfile](https://github.com/swoft-cloud/alphp/blob/alpine3.7/alphp-fpm.Dockerfile))
 - dev-3.7([alphp-dev.Dockerfile](https://github.com/swoft-cloud/alphp/blob/alpine3.7/alphp-dev.Dockerfile))
 
-base on **alpine 3.8**(php 7.2.x):
-
 ---
+
+base on **alpine 3.8**(php 7.2.x):
 
 - base-3.8([alphp-base.Dockerfile](https://github.com/swoft-cloud/alphp/blob/alpine3.8/alphp-base.Dockerfile))
 - cli-3.8([alphp-cli.Dockerfile](https://github.com/swoft-cloud/alphp/blob/alpine3.8/alphp-cli.Dockerfile))
