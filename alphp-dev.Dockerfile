@@ -8,23 +8,12 @@
 # @build-example docker build . -f alphp-dev.Dockerfile -t swoft/alphp:dev
 #
 
-FROM swoft/alphp:cli as builder
-
-FROM swoft/alphp:base
+FROM swoft/alphp:cli
 LABEL maintainer="inhere <cloud798@126.com>" version="1.0"
-
-WORKDIR /usr/lib/php7/modules
-
-COPY --from=builder /usr/local/lib/libhiredis.so.0.13 /usr/local/lib/libhiredis.so.0.13
-COPY --from=builder /usr/lib/php7/modules/mongodb.so mongodb.so
-COPY --from=builder /usr/lib/php7/modules/swoole.so swoole.so
 
 WORKDIR /var/www
 
 RUN set -ex \
-        && echo "extension=mongodb.so" > /etc/php7/conf.d/20_mongodb.ini  \
-        # && echo "extension=phalcon.so" > /etc/php7/conf.d/20_phalcon.ini \
-        && echo "extension=swoole.so" > /etc/php7/conf.d/20_swoole.ini \
         && php -m \
         # install some tools
         && apk update \
