@@ -19,9 +19,7 @@ RUN set -ex \
         # change apk source repo
         && sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/' /etc/apk/repositories \
         && apk update \
-        && apk add --no-cache \
-			php7-fpm \
-			nginx \
+        && apk add --no-cache php7-fpm php7-pcntl nginx \
         && apk del --purge *-dev \
         && rm -rf /var/cache/apk/* /tmp/* /usr/share/man /usr/share/php7 \
         # - config nginx
@@ -31,12 +29,12 @@ RUN set -ex \
         && { \
             echo "[global]"; \
             echo "pid = /var/run/php-fpm.pid"; \
-            echo "[www]"; \
-            echo "user = www"; \
-            echo "group = www"; \
+            echo "[www-data]"; \
+            echo "user = www-data"; \
+            echo "group = www-data"; \
         } | tee php-fpm.d/custom.conf \
         # - config site
-        && chown -R www:www /var/www \
+        && chown -R www-data:www-data /var/www \
         && { \
             echo "#!/bin/sh"; \
             echo "nginx -g 'daemon on;'"; \

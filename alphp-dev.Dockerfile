@@ -8,28 +8,18 @@
 # @build-example docker build . -f alphp-dev.Dockerfile -t swoft/alphp:dev
 #
 
-FROM swoft/alphp:cli-3.7 as builder
-
-FROM swoft/alphp:base
+FROM swoft/alphp:cli-3.7
 LABEL maintainer="inhere <cloud798@126.com>" version="1.0"
-
-WORKDIR /usr/lib/php7/modules
-
-COPY --from=builder /usr/local/lib/libhiredis.so.0.13 /usr/local/lib/libhiredis.so.0.13
-COPY --from=builder /usr/lib/php7/modules/mongodb.so mongodb.so
-# COPY --from=builder /usr/lib/php7/modules/phalcon.so phalcon.so
-COPY --from=builder /usr/lib/php7/modules/swoole.so swoole.so
 
 WORKDIR /var/www
 
 RUN set -ex \
-        && echo "extension=mongodb.so" > /etc/php7/conf.d/20_mongodb.ini  \
-        # && echo "extension=phalcon.so" > /etc/php7/conf.d/20_phalcon.ini \
-        && echo "extension=swoole.so" > /etc/php7/conf.d/20_swoole.ini \
         && php -m \
         # install some tools
         && apk update \
-        && apk add --no-cache nginx php7-fpm vim wget net-tools git zip unzip apache2-utils mysql-client redis \
+        && apk add --no-cache \
+            php7-fpm php7-pcntl \
+            nginx vim wget net-tools git zip unzip apache2-utils mysql-client redis \
         && apk del --purge *-dev \
         && rm -rf /var/cache/apk/* /tmp/* /usr/share/man \
         # && rm /etc/nginx/conf.d/default.conf /etc/nginx/nginx.conf \
@@ -43,12 +33,12 @@ RUN set -ex \
         && { \
             echo "[global]"; \
             echo "pid = /var/run/php-fpm.pid"; \
-            echo "[www]"; \
-            echo "user = www"; \
-            echo "group = www"; \
+            echo "[www-data]"; \
+            echo "user = www-data"; \
+            echo "group = www-data"; \
         } | tee php-fpm.d/custom.conf \
         # config site
-        && chown -R www:www /var/www \
+        && chown -R www-data:www-data /var/www \
         && { \
             echo "#!/bin/sh"; \
             echo "nginx -g 'daemon on;'"; \
