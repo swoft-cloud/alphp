@@ -67,7 +67,6 @@ RUN set -ex \
         php7-redis \
         php7-simplexml \
         php7-sockets \
-        php7-sodium \
         # php7-sqlite \
         php7-session \
         php7-sysvshm \
