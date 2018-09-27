@@ -26,6 +26,7 @@ RUN set -ex \
         # install latest composer
         && wget https://getcomposer.org/composer.phar \
         && mv composer.phar /usr/local/bin/composer \
+        && chmod +x /usr/local/bin/composer \
         # - config nginx
         && mkdir /run/nginx \
         # - config PHP-FPM
