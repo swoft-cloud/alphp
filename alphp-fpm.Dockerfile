@@ -29,7 +29,7 @@ RUN set -ex \
         && { \
             echo "[global]"; \
             echo "pid = /var/run/php-fpm.pid"; \
-            echo "[www-data]"; \
+            echo "[www]"; \
             echo "user = www-data"; \
             echo "group = www-data"; \
         } | tee php-fpm.d/custom.conf \
