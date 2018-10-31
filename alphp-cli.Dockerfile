@@ -15,7 +15,7 @@ LABEL maintainer="inhere <cloud798@126.com>" version="1.0"
 # ---------- env settings ----------
 ##
 
-ENV HIREDIS_VERSION=0.13.3 \
+ENV HIREDIS_VERSION=0.14.0 \
     SWOOLE_VERSION=4.2.5 \
     MONGO_VERSION=1.5.2 \
     #  install and remove building packages
