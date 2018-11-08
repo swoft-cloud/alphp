@@ -1,4 +1,4 @@
-# @description php 7.1 image base on the alpine 3.7 镜像更小. 本镜像用于开发，所以安装了常用工具
+# @description php image base on the alpine 镜像更小. 本镜像用于开发，所以安装了常用工具
 #                       some information
 # ------------------------------------------------------------------------------------
 # @link https://hub.docker.com/_/alpine/      alpine image

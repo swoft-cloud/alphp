@@ -1,14 +1,12 @@
 version: '3'
 services:
-    phpng:
-        image: alphp:dev
-        container_name: phpdev
-        hostname: phpdev
+    alphp:
+        image: swoft/alphp:dev
         environment:
             - APP_ENV=dev
         links:
-            - "mysql:mysql"
-            - "redis:redis"
+            - mysql
+            - redis
         ports:
             - "10080:80"
             - "19501:9501"
@@ -19,7 +17,6 @@ services:
 
     mysql:
         image: mysql
-        container_name: mysql-dev
         environment:
             - MYSQL_ROOT_PASSWORD=123456
         volumes:
@@ -27,6 +24,3 @@ services:
 
     redis:
         image: redis:3-alpine
-        container_name: redis-dev
-        ports:
-            - "6379:6379"

@@ -1,4 +1,4 @@
-# @description php 7.1 image base on the alpine 3.7 镜像更小
+# @description php image base on the alpine edge 镜像更小
 #                       some information
 # ------------------------------------------------------------------------------------
 # @link https://hub.docker.com/_/alpine/      alpine image
