@@ -1,4 +1,4 @@
-# @description php 7.1 image base on the alpine 3.7 镜像更小. 本镜像用于开发，所以安装了常用工具
+# @description php image base on the alpine 镜像更小. 本镜像用于开发，所以安装了常用工具
 #                       some information
 # ------------------------------------------------------------------------------------
 # @link https://hub.docker.com/_/alpine/      alpine image
@@ -8,7 +8,7 @@
 # @build-example docker build . -f alphp-dev.Dockerfile -t swoft/alphp:dev
 #
 
-FROM swoft/alphp:cli
+FROM swoft/alphp:cli-edge
 LABEL maintainer="inhere <cloud798@126.com>" version="1.0"
 
 WORKDIR /var/www
