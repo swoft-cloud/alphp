@@ -5,14 +5,15 @@
 [![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/swoft/alphp/cli.svg)](https://hub.docker.com/r/swoft/alphp/)
 [![MicroBadger Size (tag)](https://img.shields.io/microbadger/image-size/swoft/alphp/cli.svg)](https://hub.docker.com/r/swoft/alphp/tags/)
 
-`alphp` - 基于alpine的微型php docker环境，php 是 `7.x`, 包含最新版本swoole。构建完成的镜像只有30-40M
+`alphp` - 基于alpine的微型php docker环境，php 是 `7.x`, 包含最新版本swoole。
+构建完成的镜像只有30-40M，可以直接用于生产环境作镜像发布。
 
 共有几个镜像
 
-- `swoft/alphp:base` 基础镜像，后几个镜像基于它。(含有php和一些通用的扩展)
-- `swoft/alphp:cli` php cli环境镜像，含有swoole 和 mongodb 扩展
-- `swoft/alphp:fpm` 在 `swoft/alphp:cli` 的基础上，含有 nginx php-fpm
-- `swoft/alphp:dev` 在 `swoft/alphp:cli` 的基础上，含有 nginx php-fpm 以及一些常用工具：vim wget git zip telnet ab 等
+- `swoft/alphp:base` 基础镜像，后几个镜像基于它(含有php和一些通用的扩展)
+- `swoft/alphp:cli` php cli环境镜像，含有最新版本 swoole 和 mongodb 扩展
+- `swoft/alphp:fpm` 基于 `swoft/alphp:cli`，含有 nginx php-fpm 组件
+- `swoft/alphp:dev` 基于 `swoft/alphp:cli`，含有 nginx php-fpm 以及一些常用工具：vim wget git zip telnet ab 等，可用于开发。
 
 ## Dockerfile links
 
@@ -125,25 +126,8 @@ ENTRYPOINT ["php", "/var/www/bin/cli", "taskServer:restart"]
 
 ### 重新生成 composer autoload
 
-```
+```bash
 composer up nothing
-```
-
-### 额外的php扩展
-
-```
-memcache
-memcached
-redis
-gearman -- 队列任务处理
-seaslog -- 日志扩展
-swoole -- 异步事件扩展
-xhprof -- 性能分析
-xdebug -- 调试工具
-yac -- 快速的用户数据共享内存缓存
-yar -- 快速并发的rpc
-msgpack  -- MessagePack 数据格式实现
-yaconf  -- 持久配置容器(php7+)
 ```
 
 ## 工具推荐
@@ -216,8 +200,8 @@ kill -USR2 `cat /usr/local/php/var/run/php-fpm.pid`
 
 ### 端口检查 lsof
 
-```
-apt-get install lsof
+```bash
+lsof :9051
 ```
 
 ### ab 压力测试
