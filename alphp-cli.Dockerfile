@@ -27,7 +27,7 @@ ENV SWOOLE_VERSION=4.2.7 \
 # COPY deps/swoole-${SWOOLE_VERSION}.tar.gz swoole.tar.gz
 RUN set -ex \
         && apk update \
-        # for swoole extension libaio linux-headers
+        # libs for swoole extension. libaio linux-headers
         && apk add --no-cache libstdc++ openssl \
         && apk add --no-cache --virtual .build-deps $PHPIZE_DEPS libaio-dev openssl-dev \
         # php extension: swoole
@@ -39,7 +39,7 @@ RUN set -ex \
         && ( \
             cd swoole \
             && phpize \
-            && ./configure --enable-async-redis --enable-mysqlnd --enable-openssl \
+            && ./configure --enable-mysqlnd --enable-openssl \
             && make -j$(nproc) && make install \
         ) \
         && rm -r swoole \
@@ -51,5 +51,3 @@ RUN set -ex \
         && echo -e "\033[42;37m Build Completed :).\033[0m\n"
 
 EXPOSE 9501
-
-WORKDIR /var/www
