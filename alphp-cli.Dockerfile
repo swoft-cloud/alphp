@@ -15,8 +15,8 @@ LABEL maintainer="inhere <cloud798@126.com>" version="1.0"
 # ---------- env settings ----------
 ##
 
-ENV SWOOLE_VERSION=4.2.6 \
-    MONGO_VERSION=1.5.2 \
+ENV SWOOLE_VERSION=4.2.7 \
+    MONGO_VERSION=1.5.3 \
     #  install and remove building packages
     PHPIZE_DEPS="autoconf dpkg-dev dpkg file g++ gcc libc-dev make php7-dev php7-pear pkgconf re2c pcre-dev zlib-dev"
 
@@ -34,8 +34,8 @@ RUN set -ex \
         && apk add --no-cache --virtual .build-deps $PHPIZE_DEPS libaio-dev openssl-dev \
         # php extension: mongodb
         && cd /tmp \
-        # && curl -SL "https://github.com/mongodb/mongo-php-driver/archive/v${MONGO_VERSION}.tgz" -o mongodb.tgz \
-        && curl -SL "http://pecl.php.net/get/mongodb-${MONGO_VERSION}.tgz" -o mongodb.tgz \
+        && curl -SL "https://github.com/mongodb/mongo-php-driver/archive/v${MONGO_VERSION}.tgz" -o mongodb.tgz \
+        # && curl -SL "http://pecl.php.net/get/mongodb-${MONGO_VERSION}.tgz" -o mongodb.tgz \
         && pecl install mongodb.tgz \
         # && pecl install mongodb \
         && echo "extension=mongodb.so" > /etc/php7/conf.d/20_mongodb.ini \
