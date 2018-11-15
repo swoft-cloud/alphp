@@ -16,7 +16,6 @@ LABEL maintainer="inhere <cloud798@126.com>" version="1.0"
 ##
 
 ENV SWOOLE_VERSION=4.2.7 \
-    MONGO_VERSION=1.5.3 \
     #  install and remove building packages
     PHPIZE_DEPS="autoconf dpkg-dev dpkg file g++ gcc libc-dev make php7-dev php7-pear pkgconf re2c pcre-dev zlib-dev"
 
@@ -26,19 +25,11 @@ ENV SWOOLE_VERSION=4.2.7 \
 
 # 下载太慢，所以可以先下载好
 # COPY deps/swoole-${SWOOLE_VERSION}.tar.gz swoole.tar.gz
-# COPY deps/mongodb-${MONGO_VERSION}.tgz mongodb.tgz
 RUN set -ex \
         && apk update \
         # for swoole extension libaio linux-headers
         && apk add --no-cache libstdc++ openssl \
         && apk add --no-cache --virtual .build-deps $PHPIZE_DEPS libaio-dev openssl-dev \
-        # php extension: mongodb
-        && cd /tmp \
-        && curl -SL "https://github.com/mongodb/mongo-php-driver/archive/v${MONGO_VERSION}.tgz" -o mongodb.tgz \
-        # && curl -SL "http://pecl.php.net/get/mongodb-${MONGO_VERSION}.tgz" -o mongodb.tgz \
-        && pecl install mongodb.tgz \
-        # && pecl install mongodb \
-        && echo "extension=mongodb.so" > /etc/php7/conf.d/20_mongodb.ini \
         # php extension: swoole
         && cd /tmp \
         && curl -SL "https://github.com/swoole/swoole-src/archive/v${SWOOLE_VERSION}.tar.gz" -o swoole.tar.gz \

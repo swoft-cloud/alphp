@@ -56,6 +56,7 @@ RUN set -ex \
         php7-iconv \
         php7-json \
         php7-mbstring \
+        php7-mongodb \
         php7-mysqlnd \
         php7-openssl \
         # php7-opcache \
