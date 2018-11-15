@@ -8,7 +8,7 @@
 # @build-example docker build . -f alphp-base.Dockerfile -t swoft/alphp:base
 #
 
-FROM alpine:edge
+FROM alpine:3.8
 LABEL maintainer="inhere <cloud798@126.com>" version="1.0"
 
 ##
