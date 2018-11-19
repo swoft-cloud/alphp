@@ -54,6 +54,7 @@ RUN set -ex \
         php7-fileinfo \
         # php7-gettext \
         php7-iconv \
+        php7-imagick \
         php7-json \
         php7-mbstring \
         php7-mysqlnd \
