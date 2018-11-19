@@ -53,6 +53,7 @@ RUN set -ex \
         php7-dom \
         php7-fileinfo \
         # php7-gettext \
+        php-gd \
         php7-iconv \
         php7-imagick \
         php7-json \
