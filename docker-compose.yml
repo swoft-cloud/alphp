@@ -2,6 +2,7 @@ version: '3'
 services:
     alphp:
         image: swoft/alphp:dev
+        container_name: php-svr
         environment:
             - APP_ENV=dev
         links:
@@ -12,11 +13,12 @@ services:
             - "19501:9501"
         volumes:
             - ./:/var/www
-            - ./tmp/ng-conf:/etc/nginx
-            - ./tmp/logs:/var/log
+            # - ./tmp/ng-conf:/etc/nginx
+            # - ./tmp/logs:/var/log
 
     mysql:
         image: mysql
+        container_name: mysql-svr
         environment:
             - MYSQL_ROOT_PASSWORD=123456
         ports:
@@ -25,6 +27,7 @@ services:
             - ./tmp/data/mysql:/var/lib/mysql
 
     redis:
+        container_name: redis-svr
         image: redis:4-alpine
         ports:
             - "16379:6379"
