@@ -19,6 +19,8 @@ services:
         image: mysql
         environment:
             - MYSQL_ROOT_PASSWORD=123456
+        ports:
+            - "13306:3306"
         volumes:
             - ./tmp/data/mysql:/var/lib/mysql
 
