@@ -25,4 +25,6 @@ services:
             - ./tmp/data/mysql:/var/lib/mysql
 
     redis:
-        image: redis:3-alpine
+        image: redis:4-alpine
+        ports:
+            - "16379:6379"

@@ -115,7 +115,7 @@ composer up nothing
 - phpmd 代码检查
 - 类参考文档生成
 - [deployer](https://deployer.org/releases/v4.0.1/deployer.phar) 一个用PHP编写的部署工具支持流行的框架
-- [xhprof 安装](install-xhprof.md)
+- [xhprof 安装](deps/xhprof/install-xhprof.md)
 
 ### add composer
 
@@ -198,9 +198,6 @@ yum install httpd-tools
 
 ### 相关库
 
-- [hiredis](https://github.com/redis/hiredis) 异步redis操作支持
-- [nghttp2](https://github.com/tatsuhiro-t/nghttp2) http2支持
-
 ### 编译命令
 
 ```bash
@@ -222,7 +219,13 @@ yum install httpd-tools
 - `--enable-http2`         // 增加对HTTP2的支持，依赖nghttp2库. 必须开启openssl
 - ~`--enable-coroutine`~     // 启用协程能力(swoole 4 已去除此选项)
 
-## 库推荐
+## 相关库
 
 - [workerman](https://github.com/walkor/workerman)
 - [swoole](https://github.com/swoole/swoole-src)
+- [hiredis](https://github.com/redis/hiredis) 异步redis操作支持
+- [nghttp2](https://github.com/tatsuhiro-t/nghttp2) http2支持
+
+## License
+
+[MIT](LICENSE)
