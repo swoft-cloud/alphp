@@ -30,8 +30,8 @@ RUN set -ex \
             echo "[global]"; \
             echo "pid = /var/run/php-fpm.pid"; \
             echo "[www]"; \
-            echo "user = www-data"; \
-            echo "group = www-data"; \
+            echo "user = www"; \
+            echo "group = www"; \
         } | tee php-fpm.d/custom.conf \
         # - config site
         && chown -R www-data:www-data /var/www \
