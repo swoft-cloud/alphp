@@ -34,7 +34,7 @@ RUN set -ex \
             echo "group = www"; \
         } | tee php-fpm.d/custom.conf \
         # - config site
-        && chown -R www-data:www-data /var/www \
+        && chown -R www:www /var/www \
         && { \
             echo "#!/bin/sh"; \
             echo "nginx -g 'daemon on;'"; \

@@ -19,8 +19,6 @@ LABEL maintainer="inhere <cloud798@126.com>" version="1.0"
 ARG timezone
 # prod pre test dev
 ARG app_env=prod
-# default user
-ARG add_user=www
 
 ENV APP_ENV=${app_env:-"prod"} \
     TIMEZONE=${timezone:-"Asia/Shanghai"}
@@ -93,11 +91,11 @@ RUN set -ex \
         && echo "${TIMEZONE}" > /etc/timezone \
         # ---------- some config work ----------
         # - ensure default in Alpine)
-        && addgroup -g 82 -S ${add_user} \
-        && adduser -u 82 -D -S -G ${add_user} ${add_user} \
+        && addgroup -g 82 -S www \
+        && adduser -u 82 -D -S -G www www \
         # - create user dir
         && mkdir -p /data \
-        && chown -R ${add_user}:${add_user} /data \
+        && chown -R www:www /data \
         && echo -e "\033[42;37m Build Completed :).\033[0m\n"
 
 # EXPOSE 9000
