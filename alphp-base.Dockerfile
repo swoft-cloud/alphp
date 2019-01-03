@@ -1,4 +1,4 @@
-# @description php image base on the alpine edge 镜像更小
+# @description php image base on the alpine OS 镜像更小
 #                       some information
 # ------------------------------------------------------------------------------------
 # @link https://hub.docker.com/_/alpine/      alpine image
@@ -72,7 +72,7 @@ RUN set -ex \
         php7-sockets \
         php7-sodium \
         # php7-sqlite \
-        php7-session \
+        # php7-session \
         php7-sysvshm \
         php7-sysvmsg \
         php7-sysvsem \
