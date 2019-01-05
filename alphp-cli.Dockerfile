@@ -15,7 +15,7 @@ LABEL maintainer="inhere <cloud798@126.com>" version="1.0"
 # ---------- env settings ----------
 ##
 
-ENV SWOOLE_VERSION=4.2.11 \
+ENV SWOOLE_VERSION=4.2.12 \
     #  install and remove building packages
     PHPIZE_DEPS="autoconf dpkg-dev dpkg file g++ gcc libc-dev make php7-dev php7-pear pkgconf re2c pcre-dev zlib-dev"
 
