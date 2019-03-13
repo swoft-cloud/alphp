@@ -23,7 +23,7 @@ ENV SWOOLE_VERSION=4.3.1 \
 # install php extensions
 ##
 
-# 下载太慢，所以可以先下载好
+# 若下载太慢，所以也可以先下载好
 # COPY deps/swoole-${SWOOLE_VERSION}.tar.gz swoole.tar.gz
 RUN set -ex \
         && apk update \
