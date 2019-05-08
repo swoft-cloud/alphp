@@ -1,5 +1,27 @@
 version: '3'
 services:
+    alfpm:
+        image: swoft/alphp:fpm
+        environment:
+            TZ: Asia/Shanghai
+            APP_ENV: dev
+        volumes:
+            - ../:/data # source code
+            - ./conf/nginx.conf:/etc/nginx/nginx.conf
+            - ./conf/app-vhost:/etc/nginx/conf.d/default.conf # doc restart nginx -> take effect
+            - ./config/fpm.www.conf:/etc/php7/php-fpm.d/www.conf
+            - ./config/php.www.ini:/etc/php7/conf.d/www.ini
+            - ./logs/nginx:/var/log/nginx
+            - ./logs/fpm:/var/log/php7
+        ports:
+           - "80:80"
+           - "443:443"
+        links:
+            - mysql
+            - redis
+        extra_hosts:
+             - "fpm:127.0.0.1"
+             
     alphp:
         image: swoft/alphp:dev
         container_name: php-svr
