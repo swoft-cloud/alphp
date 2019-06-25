@@ -13,12 +13,13 @@ LABEL maintainer="inhere <cloud798@126.com>" version="1.0"
 
 WORKDIR /var/www
 
+
 RUN set -ex \
         && php -m \
         # install some tools
         && apk update \
         && apk add --no-cache \
-            php7-fpm php7-pcntl \
+            php7-fpm php7-pcntl php7-xmlwriter \
             nginx vim wget net-tools git zip unzip apache2-utils mysql-client redis \
         && apk del --purge *-dev \
         && rm -rf /var/cache/apk/* /tmp/* /usr/share/man \
@@ -26,6 +27,8 @@ RUN set -ex \
         # install latest composer
         && wget https://getcomposer.org/composer.phar \
         && mv composer.phar /usr/local/bin/composer \
+        # make it executable
+        && chmod +x /usr/local/bin/composer \
         # - config nginx
         && mkdir /run/nginx \
         # - config PHP-FPM
