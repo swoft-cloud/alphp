@@ -19,8 +19,8 @@ RUN set -ex \
         # install some tools
         && apk update \
         && apk add --no-cache \
-            php7-fpm php7-pcntl \
-            nginx vim wget net-tools git zip unzip apache2-utils mysql-client redis php7-xmlwriter \
+            php7-fpm php7-pcntl php7-xmlwriter \
+            nginx vim wget net-tools git zip unzip apache2-utils mysql-client redis \
         && apk del --purge *-dev \
         && rm -rf /var/cache/apk/* /tmp/* /usr/share/man \
         # && rm /etc/nginx/conf.d/default.conf /etc/nginx/nginx.conf \
